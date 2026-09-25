@@ -86,56 +86,58 @@ export function Quotes() {
 
       {filtered.length > 0 && (
         <>
-          <div className="card blueprint hidden overflow-x-auto p-0 sm:block">
+          <div className="card blueprint hidden p-0 sm:block">
             <BlueprintCorners />
-            <table className="table">
-              <thead>
-                <tr>
-                  <th className="pl-5">Quote #</th>
-                  <th>Client</th>
-                  <th>Description</th>
-                  <th>Issue Date</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th className="pr-5 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map((quote) => (
-                  <tr key={quote.id}>
-                    <td className="pl-5">
-                      <Link to={`/quotes/${quote.id}`} className="btn btn-ghost p-0! text-sm">
-                        {quote.number}
-                      </Link>
-                    </td>
-                    <td>{getClientById(quote.clientId)?.name ?? 'Unknown client'}</td>
-                    <td className="max-w-xs truncate">{quote.description}</td>
-                    <td className="text-ink/60">{formatDate(quote.issueDate)}</td>
-                    <td>{formatCurrency(quote.amount)}</td>
-                    <td>
-                      <StatusBadge status={quote.status} />
-                    </td>
-                    <td className="pr-5">
-                      <div className="flex justify-end gap-3.5 text-sm">
-                        <Link to={`/quotes/${quote.id}`} className="btn btn-ghost p-0!">
-                          View
-                        </Link>
-                        <Link to={`/quotes/${quote.id}/edit`} className="btn btn-ghost p-0!">
-                          Edit
-                        </Link>
-                        <button
-                          type="button"
-                          onClick={() => setPendingDelete(quote)}
-                          className="btn btn-ghost p-0! text-[#a13c2c]! hover:bg-[#a13c2c]/10!"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </td>
+            <div className="overflow-x-auto">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th className="pl-5">Quote #</th>
+                    <th>Client</th>
+                    <th>Description</th>
+                    <th>Issue Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th className="pr-5 text-right">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {filtered.map((quote) => (
+                    <tr key={quote.id}>
+                      <td className="pl-5">
+                        <Link to={`/quotes/${quote.id}`} className="btn btn-ghost p-0! text-sm">
+                          {quote.number}
+                        </Link>
+                      </td>
+                      <td>{getClientById(quote.clientId)?.name ?? 'Unknown client'}</td>
+                      <td className="max-w-xs truncate">{quote.description}</td>
+                      <td className="text-ink/60">{formatDate(quote.issueDate)}</td>
+                      <td>{formatCurrency(quote.amount)}</td>
+                      <td>
+                        <StatusBadge status={quote.status} />
+                      </td>
+                      <td className="pr-5">
+                        <div className="flex justify-end gap-3.5 text-sm">
+                          <Link to={`/quotes/${quote.id}`} className="btn btn-ghost p-0!">
+                            View
+                          </Link>
+                          <Link to={`/quotes/${quote.id}/edit`} className="btn btn-ghost p-0!">
+                            Edit
+                          </Link>
+                          <button
+                            type="button"
+                            onClick={() => setPendingDelete(quote)}
+                            className="btn btn-ghost p-0! text-[#a13c2c]! hover:bg-[#a13c2c]/10!"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <div className="flex flex-col gap-3 sm:hidden">

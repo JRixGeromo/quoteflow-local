@@ -40,30 +40,32 @@ export function Clients() {
         </div>
       ) : (
         <>
-          <div className="card blueprint hidden overflow-x-auto p-0 sm:block">
+          <div className="card blueprint hidden p-0 sm:block">
             <BlueprintCorners />
-            <table className="table">
-              <thead>
-                <tr>
-                  <th className="pl-5">Name</th>
-                  <th>Company</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th className="pr-5">Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map((client) => (
-                  <tr key={client.id}>
-                    <td className="pl-5 font-medium text-ink">{client.name}</td>
-                    <td>{client.company}</td>
-                    <td>{client.email}</td>
-                    <td>{client.phone}</td>
-                    <td className="pr-5 text-ink/60">{client.notes}</td>
+            <div className="overflow-x-auto">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th className="pl-5">Name</th>
+                    <th>Company</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th className="pr-5">Notes</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {filtered.map((client) => (
+                    <tr key={client.id}>
+                      <td className="pl-5 font-medium text-ink">{client.name}</td>
+                      <td>{client.company}</td>
+                      <td>{client.email}</td>
+                      <td>{client.phone}</td>
+                      <td className="pr-5 text-ink/60">{client.notes}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <div className="flex flex-col gap-3 sm:hidden">
