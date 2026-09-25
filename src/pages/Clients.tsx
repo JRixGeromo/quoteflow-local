@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { BlueprintCorners } from '../components/BlueprintCorners'
 import { PageHeader } from '../components/PageHeader'
 import { useData } from '../lib/DataContext'
 import { filterClients } from '../lib/quotes'
@@ -21,43 +22,64 @@ export function Clients() {
           value={search}
           onChange={(event) => setSearch(event.target.value)}
           placeholder="Search by name, company, email, or phone"
-          className="w-full max-w-md rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          className="input w-full max-w-md"
           aria-label="Search clients"
         />
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-white shadow-sm">
-        {filtered.length === 0 ? (
-          <p className="px-5 py-8 text-center text-sm text-slate-500">
-            No clients match your search.
-          </p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-slate-200 text-sm">
+      {filtered.length === 0 ? (
+        <div className="card blueprint flex flex-col items-center gap-3 px-6 py-14 text-center">
+          <BlueprintCorners />
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-500)" strokeWidth={1.5}>
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
+            <path d="m8 8 6 6" />
+            <path d="m14 8-6 6" />
+          </svg>
+          <h3>No clients match your search</h3>
+        </div>
+      ) : (
+        <>
+          <div className="card blueprint hidden overflow-x-auto p-0 sm:block">
+            <BlueprintCorners />
+            <table className="table">
               <thead>
-                <tr className="text-left text-xs font-medium uppercase tracking-wide text-slate-500">
-                  <th className="px-5 py-3">Name</th>
-                  <th className="px-5 py-3">Company</th>
-                  <th className="px-5 py-3">Email</th>
-                  <th className="px-5 py-3">Phone</th>
-                  <th className="px-5 py-3">Notes</th>
+                <tr>
+                  <th className="pl-5">Name</th>
+                  <th>Company</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th className="pr-5">Notes</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody>
                 {filtered.map((client) => (
-                  <tr key={client.id} className="hover:bg-slate-50">
-                    <td className="px-5 py-3 font-medium text-slate-900">{client.name}</td>
-                    <td className="px-5 py-3 text-slate-700">{client.company}</td>
-                    <td className="px-5 py-3 text-slate-700">{client.email}</td>
-                    <td className="px-5 py-3 text-slate-700">{client.phone}</td>
-                    <td className="px-5 py-3 text-slate-500">{client.notes}</td>
+                  <tr key={client.id}>
+                    <td className="pl-5 font-medium text-ink">{client.name}</td>
+                    <td>{client.company}</td>
+                    <td>{client.email}</td>
+                    <td>{client.phone}</td>
+                    <td className="pr-5 text-ink/60">{client.notes}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        )}
-      </div>
+
+          <div className="flex flex-col gap-3 sm:hidden">
+            {filtered.map((client) => (
+              <div key={client.id} className="card blueprint flex flex-col gap-1.5">
+                <BlueprintCorners />
+                <div className="text-sm font-semibold text-ink">{client.name}</div>
+                <div className="text-sm text-ink/70">{client.company}</div>
+                <div className="text-xs text-ink/60">{client.email}</div>
+                <div className="text-xs text-ink/60">{client.phone}</div>
+                {client.notes && <div className="mt-1 text-xs text-ink/60">{client.notes}</div>}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   )
 }
