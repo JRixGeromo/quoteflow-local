@@ -17,28 +17,28 @@ export function ConfirmDialog({
 }: ConfirmDialogProps) {
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4"
+      className="fixed inset-0 z-50 grid place-items-center bg-neutral-900/50 p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="confirm-dialog-title"
     >
-      <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-xl">
-        <h2 id="confirm-dialog-title" className="text-lg font-semibold text-slate-900">
+      <div className="flex w-full max-w-[440px] flex-col gap-3 rounded-[7px] bg-surface p-5 shadow-lg">
+        <h2 id="confirm-dialog-title" className="font-heading text-xl font-semibold text-ink">
           {title}
         </h2>
-        <p className="mt-2 text-sm text-slate-600">{message}</p>
-        <div className="mt-6 flex justify-end gap-3">
+        <p className="text-sm text-ink/85">{message}</p>
+        <div className="mt-2 flex justify-end gap-2.5">
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="border border-[color:var(--color-divider)] px-4 py-2 font-heading text-sm font-semibold text-ink hover:bg-ink/[0.07]"
           >
             {cancelLabel}
           </button>
           <button
             type="button"
             onClick={onConfirm}
-            className="rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700"
+            className="border border-[#a13c2c] bg-[#a13c2c] px-4 py-2 font-heading text-sm font-semibold text-white hover:bg-[#8a3224]"
           >
             {confirmLabel}
           </button>

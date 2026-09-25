@@ -1,1 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@400;600&display=swap');
 @import 'tailwindcss';
+
+@theme {
+  --color-bg: #f2f2f3;
+  --color-surface: #e9e9ea;
+  --color-ink: #1d1f20;
+  --color-accent: #5980a6;
+  --color-accent-2: #728fab;
+  --color-divider: color-mix(in srgb, #1d1f20 16%, transparent);
+
+  --color-neutral-100: #f5f5f8;
+  --color-neutral-200: #e7e7ea;
+  --color-neutral-300: #d4d4d7;
+  --color-neutral-400: #b7b7ba;
+  --color-neutral-500: #98989b;
+  --color-neutral-600: #7a7a7d;
+  --color-neutral-700: #5d5d60;
+  --color-neutral-800: #424244;
+  --color-neutral-900: #2b2b2d;
+
+  --color-accent-100: #eef6ff;
+  --color-accent-200: #d6ebff;
+  --color-accent-300: #b5d9fd;
+  --color-accent-400: #94bce3;
+  --color-accent-500: #749dc4;
+  --color-accent-600: #597ea3;
+  --color-accent-700: #416180;
+  --color-accent-800: #2c455d;
+  --color-accent-900: #1d2d3d;
+
+  --color-status-draft-bg: #e7e7ea;
+  --color-status-draft-text: #424244;
+  --color-status-sent-bg: #eef6ff;
+  --color-status-sent-text: #2c455d;
+  --color-status-accepted-bg: #e3f1e7;
+  --color-status-accepted-text: #2f6b46;
+  --color-status-rejected-bg: #fbe6e2;
+  --color-status-rejected-text: #a13c2c;
+
+  --font-heading: 'Barlow Condensed', system-ui, sans-serif;
+  --font-body: 'Barlow', system-ui, sans-serif;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 7px;
+
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #2b2b2d 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #2b2b2d 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #2b2b2d 22%, transparent);
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+/* Blueprint registration marks: four hairline corner ticks drawn outside
+   the box, used on cards/buttons to match the approved design system. */
+.blueprint {
+  position: relative;
+}
+.blueprint > .corner {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  color: color-mix(in srgb, var(--color-ink) 55%, transparent);
+}
+.blueprint > .corner::before,
+.blueprint > .corner::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+}
+.blueprint > .corner::before {
+  left: 5px;
+  top: 0;
+  width: 1px;
+  height: 100%;
+}
+.blueprint > .corner::after {
+  top: 5px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+}
+.blueprint > .corner.tl {
+  top: -6px;
+  left: -6px;
+}
+.blueprint > .corner.tr {
+  top: -6px;
+  right: -6px;
+}
+.blueprint > .corner.bl {
+  bottom: -6px;
+  left: -6px;
+}
+.blueprint > .corner.br {
+  bottom: -6px;
+  right: -6px;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 whitespace-nowrap border border-transparent px-4 py-2 font-heading text-sm font-semibold transition-colors;
+  }
+  .btn:disabled {
+    @apply cursor-not-allowed opacity-45;
+  }
+  .btn-primary {
+    @apply border-accent bg-accent text-bg hover:bg-accent-600 active:bg-accent-700;
+  }
+  .btn-secondary {
+    @apply border-[color:var(--color-divider)] text-ink hover:bg-ink/[0.07] active:bg-ink/[0.14];
+  }
+  .btn-ghost {
+    @apply border-transparent px-1 text-accent hover:bg-accent/10 active:bg-accent/20;
+  }
+  .btn-danger {
+    @apply border-[#a13c2c] text-[#a13c2c] hover:bg-[#a13c2c]/10 active:bg-[#a13c2c]/20;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-xs text-ink/70;
+  }
+  .input {
+    @apply min-h-9 w-full rounded-[var(--radius-md)] border border-[color:var(--color-divider)] bg-surface px-2.5 py-1.5 text-sm text-ink transition-colors hover:border-ink/45 focus:border-accent focus:outline-none;
+  }
+  .input:disabled {
+    @apply bg-neutral-100 text-neutral-600;
+  }
+
+  .card {
+    @apply border border-[color:var(--color-divider)] bg-transparent p-4;
+  }
+  .stat-card {
+    @apply flex flex-col gap-1.5 border border-[color:var(--color-divider)] bg-transparent p-4;
+  }
+  .stat-card-label {
+    @apply text-[10px] font-medium uppercase tracking-wide text-accent;
+  }
+  .stat-card-value {
+    @apply font-heading text-[28px] font-semibold leading-none text-ink;
+  }
+
+  .table {
+    @apply w-full border-collapse text-sm;
+  }
+  .table th {
+    @apply border-b border-[color:var(--color-divider)] px-3 py-2.5 text-left text-[11px] font-medium uppercase tracking-wide text-ink/60;
+  }
+  .table td {
+    @apply border-b border-ink/[0.08] px-3 py-2.5 text-ink/85;
+  }
+  .table tbody tr:hover {
+    @apply bg-ink/[0.04];
+  }
+}

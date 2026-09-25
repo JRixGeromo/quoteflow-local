@@ -1,16 +1,16 @@
 import type { QuoteStatus } from '../types'
 
 const STYLES: Record<QuoteStatus, string> = {
-  Draft: 'bg-slate-100 text-slate-700 ring-slate-300',
-  Sent: 'bg-blue-100 text-blue-700 ring-blue-300',
-  Accepted: 'bg-emerald-100 text-emerald-700 ring-emerald-300',
-  Rejected: 'bg-rose-100 text-rose-700 ring-rose-300',
+  Draft: 'bg-status-draft-bg text-status-draft-text',
+  Sent: 'bg-status-sent-bg text-status-sent-text',
+  Accepted: 'bg-status-accepted-bg text-status-accepted-text',
+  Rejected: 'bg-status-rejected-bg text-status-rejected-text',
 }
 
 export function StatusBadge({ status }: { status: QuoteStatus }) {
   return (
     <span
-      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${STYLES[status]}`}
+      className={`inline-flex items-center rounded-[3px] px-2.5 py-1 text-[11px] font-medium tracking-wide ${STYLES[status]}`}
     >
       {status}
     </span>

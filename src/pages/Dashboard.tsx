@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { BlueprintCorners } from '../components/BlueprintCorners'
 import { PageHeader } from '../components/PageHeader'
 import { StatusBadge } from '../components/StatusBadge'
 import { useData } from '../lib/DataContext'
@@ -27,76 +28,99 @@ export function Dashboard() {
         title="Dashboard"
         description="A live overview of your clients and quotes."
         actions={
-          <Link
-            to="/quotes/new"
-            className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
-          >
+          <Link to="/quotes/new" className="btn btn-primary blueprint">
+            <BlueprintCorners />
+            <PlusIcon />
             New Quote
           </Link>
         }
       />
 
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-3 lg:grid-cols-4">
         {cards.map((card) => (
-          <div key={card.label} className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-              {card.label}
-            </p>
-            <p className="mt-2 text-2xl font-semibold text-slate-900">{card.value}</p>
+          <div key={card.label} className="stat-card blueprint">
+            <BlueprintCorners />
+            <p className="stat-card-label">{card.label}</p>
+            <p className="stat-card-value">{card.value}</p>
           </div>
         ))}
       </div>
 
-      <div className="mt-8 rounded-lg border border-slate-200 bg-white shadow-sm">
-        <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
-          <h2 className="text-base font-semibold text-slate-900">Recent Quotes</h2>
-          <Link to="/quotes" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
+      <div className="card blueprint mt-8 p-0">
+        <BlueprintCorners />
+        <div className="flex items-center justify-between border-b border-[color:var(--color-divider)] px-5 py-4">
+          <h2 className="text-lg">Recent Quotes</h2>
+          <Link to="/quotes" className="btn btn-ghost">
             View all quotes
           </Link>
         </div>
 
         {recent.length === 0 ? (
-          <p className="px-5 py-8 text-center text-sm text-slate-500">
+          <p className="px-5 py-8 text-center text-sm text-ink/60">
             No quotes yet. Create your first quote to get started.
           </p>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-slate-200 text-sm">
-              <thead>
-                <tr className="text-left text-xs font-medium uppercase tracking-wide text-slate-500">
-                  <th className="px-5 py-3">Quote #</th>
-                  <th className="px-5 py-3">Client</th>
-                  <th className="px-5 py-3">Issue Date</th>
-                  <th className="px-5 py-3">Amount</th>
-                  <th className="px-5 py-3">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {recent.map((quote) => (
-                  <tr key={quote.id} className="hover:bg-slate-50">
-                    <td className="px-5 py-3">
-                      <Link
-                        to={`/quotes/${quote.id}`}
-                        className="font-medium text-indigo-600 hover:text-indigo-700"
-                      >
-                        {quote.number}
-                      </Link>
-                    </td>
-                    <td className="px-5 py-3 text-slate-700">
-                      {getClientById(quote.clientId)?.name ?? 'Unknown client'}
-                    </td>
-                    <td className="px-5 py-3 text-slate-700">{formatDate(quote.issueDate)}</td>
-                    <td className="px-5 py-3 text-slate-700">{formatCurrency(quote.amount)}</td>
-                    <td className="px-5 py-3">
-                      <StatusBadge status={quote.status} />
-                    </td>
+          <>
+            <div className="hidden overflow-x-auto sm:block">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th className="pl-5">Quote #</th>
+                    <th>Client</th>
+                    <th>Issue Date</th>
+                    <th>Amount</th>
+                    <th className="pr-5">Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {recent.map((quote) => (
+                    <tr key={quote.id}>
+                      <td className="pl-5">
+                        <Link to={`/quotes/${quote.id}`} className="btn btn-ghost p-0! text-sm">
+                          {quote.number}
+                        </Link>
+                      </td>
+                      <td>{getClientById(quote.clientId)?.name ?? 'Unknown client'}</td>
+                      <td className="text-ink/60">{formatDate(quote.issueDate)}</td>
+                      <td>{formatCurrency(quote.amount)}</td>
+                      <td className="pr-5">
+                        <StatusBadge status={quote.status} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="divide-y divide-[color:var(--color-divider)] sm:hidden">
+              {recent.map((quote) => (
+                <div key={quote.id} className="flex flex-col gap-1.5 px-4 py-3.5">
+                  <div className="flex items-center justify-between">
+                    <Link to={`/quotes/${quote.id}`} className="btn btn-ghost p-0! text-sm">
+                      {quote.number}
+                    </Link>
+                    <StatusBadge status={quote.status} />
+                  </div>
+                  <div className="text-sm">{getClientById(quote.clientId)?.name ?? 'Unknown client'}</div>
+                  <div className="flex justify-between text-xs text-ink/60">
+                    <span>{formatDate(quote.issueDate)}</span>
+                    <span>{formatCurrency(quote.amount)}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </div>
+  )
+}
+
+function PlusIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+      <path d="M5 12h14" />
+      <path d="M12 5v14" />
+    </svg>
   )
 }
